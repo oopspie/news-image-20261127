@@ -1,52 +1,68 @@
-# The World Today — Friday, 27 November 2026
+# THE WORLD TODAY — Friday, 27 November 2026
 
 [![make.fun · news-image-20261127](https://make.fun/badge/news-image-20261127.svg)](https://make.fun/bounty/news-image-20261127?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261127)
 [![rank](https://make.fun/badge/news-image-20261127/oopspie/news-image-20261127/rank.svg)](https://make.fun/bounty/news-image-20261127/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261127)
 [![reward](https://make.fun/badge/news-image-20261127/oopspie/news-image-20261127/reward.svg)](https://make.fun/bounty/news-image-20261127?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261127)
 
-A newspaper front-page image summing up the world news of Friday,
-27 November 2026. Built for the make.fun `news-image-20261127`
-competition: https://make.fun/bounty/news-image-20261127
+Built for the make.fun `news-image-20261127` competition: https://make.fun/bounty/news-image-20261127
 
-## The five stories, as drawn
+A newspaper front page drawn entirely in code with Pillow. No photos,
+no downloaded images, no network calls: every pictogram on the page is
+built from lines, arcs, ellipses and polygons in `draw_entry.py`.
 
-1. **TANKERS HIT MINES, OIL JUMPS** (lead) — Iran's Revolutionary
-   Guards say two tankers struck mines in the Strait of Hormuz; Brent
-   crude settles at $96.57, up about 8% over three sessions.
-2. **DRONE STRIKE KILLS TWO ITALIANS** — Drones hit a Kuwaiti
-   air-defence site on 26 Nov, killing two Italian technicians; Italy
-   blames Iran, Iran denies it.
-3. **EU SUMMIT STALLS ON €45BN LOAN** — The Brussels summit ends
-   early with no decision on a €45bn Ukraine loan, pushed to December;
-   the EU budget also unresolved.
-4. **NORTH KOREA PAUSES MISSILE AID** — Ukrainian intelligence says
-   North Korea has suspended KN-23 missile deliveries to Russia.
-5. **BRITAIN CALLS UP 100,000 VETERANS** — The UK is contacting
-   100,000 retired personnel over military readiness, a first since
+## The five stories
+
+1. **Lead — Energy markets.** Iran's Revolutionary Guards say two
+   tankers struck mines in the Strait of Hormuz. Brent crude settles at
+   $96.57, up about 8% over three sessions.
+2. **Kuwait.** A drone attack on 26 Nov hit a Kuwaiti air-defence site,
+   killing two Italian technicians. Italy says the drones were of
+   Iranian origin; Iran denies responsibility.
+3. **Brussels.** The special EU summit ended early on 27 Nov with no
+   decision on a €45 billion Ukraine loan, pushed to December. The
+   2028–2034 EU budget also unresolved.
+4. **Ukraine.** Ukrainian intelligence says North Korea has suspended
+   KN-23 missile deliveries to Russia.
+5. **London.** The UK government is contacting 100,000 retired
+   military personnel over military readiness, for the first time since
    the Cold War.
 
-Every number shown is one of the verified figures above. All
-pictograms (tanker and sea mine, drone, EU stars, missile with pause
-sign, soldier's helmet) are drawn from scratch in code.
+Every number on the page comes from the verified facts above; nothing
+else was invented.
 
 ## How to run
 
-```sh
-mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py
+```bash
+python3 main.py
 ```
 
-`main.py` (Python 3.13) calls `draw_entry.py`, which draws the
-1024×1024 PNG with Pillow to `$MAKEFUN_OUTPUT_DIR/entry.png` (or
-`/output/entry.png` when the variable is unset). The previous day's
-entry used the same Pillow setup and its program runs passed the
-gate.
+This writes `entry.png` (1024×1024) to the directory named by the
+`MAKEFUN_OUTPUT_DIR` environment variable, defaulting to `/output`.
+For example:
+
+```bash
+MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
+```
+
+Requires Python 3 and Pillow (`pip install pillow`). The DejaVu fonts
+shipped with the system are used; no fonts are bundled.
 
 ## Determinism
 
-The program uses no network, no clock and no randomness, so two runs
-write byte-for-byte identical files. Verified by running it twice
-into two different output directories and comparing SHA-256 hashes.
+The program reads no clock, no network and no random source, so two
+runs produce byte-identical PNG files. You can check with:
 
-## License
+```bash
+MAKEFUN_OUTPUT_DIR=/tmp/run1 python3 main.py
+MAKEFUN_OUTPUT_DIR=/tmp/run2 python3 main.py
+sha256sum /tmp/run1/entry.png /tmp/run2/entry.png
+```
 
-MIT — see `LICENSE`.
+## Layout
+
+- Masthead `THE WORLD TODAY`, dated Friday, 27 November 2026.
+- Lead story across the top with a large tanker-and-mine pictogram.
+- The other four stories in a 2×2 grid, each with its own small
+  pictogram: a quadcopter drone, a ring of EU stars, a missile, and a
+  soldier's helmet above a call-up letter.
+- Newsprint palette: off-white paper, black ink, one red accent.
