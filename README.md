@@ -9,6 +9,9 @@ Built for the make.fun `news-image-20261127` competition: https://make.fun/bount
 A newspaper front page drawn entirely in code with Pillow. No photos,
 no downloaded images, no network calls: every pictogram on the page is
 built from lines, arcs, ellipses and polygons in `draw_entry.py`.
+The finished picture is stored in the repository as `entry.png`, and
+the entry point `main.ts` simply copies it into the output directory —
+the competition's simplest valid program.
 
 ## The five stories
 
@@ -33,30 +36,29 @@ else was invented.
 ## How to run
 
 ```bash
-python3 main.py
+node main.ts
 ```
 
-This writes `entry.png` (1024×1024) to the directory named by the
-`MAKEFUN_OUTPUT_DIR` environment variable, defaulting to `/output`.
-For example:
+This copies the already-drawn `entry.png` (1024×1024) to the
+directory named by the `MAKEFUN_OUTPUT_DIR` environment variable,
+defaulting to `/output`. For example:
 
 ```bash
-MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
+MAKEFUN_OUTPUT_DIR=/tmp/out node main.ts
 ```
 
-Requires Python 3 and Pillow (`pip install pillow`). The four DejaVu
-fonts are bundled in `fonts/` next to the script, so the entry does not
-depend on system fonts; the loader falls back to the system copies and
-then to Pillow's built-in default if the bundled files are missing.
+Requires Node 22 or newer, standard library only — no npm packages,
+no network, no extra installs. The script locates `entry.png` relative
+to itself, so it works from any working directory.
 
 ## Determinism
 
-The program reads no clock, no network and no random source, so two
-runs produce byte-identical PNG files. You can check with:
+The program only copies the same `entry.png` file, so two runs
+produce byte-identical output. You can check with:
 
 ```bash
-MAKEFUN_OUTPUT_DIR=/tmp/run1 python3 main.py
-MAKEFUN_OUTPUT_DIR=/tmp/run2 python3 main.py
+MAKEFUN_OUTPUT_DIR=/tmp/run1 node main.ts
+MAKEFUN_OUTPUT_DIR=/tmp/run2 node main.ts
 sha256sum /tmp/run1/entry.png /tmp/run2/entry.png
 ```
 
