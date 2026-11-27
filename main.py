@@ -6,6 +6,9 @@ nothing is copied in from elsewhere.
 """
 
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from draw_entry import save_entry
 
