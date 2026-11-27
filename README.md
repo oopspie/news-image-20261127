@@ -44,8 +44,10 @@ For example:
 MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
 ```
 
-Requires Python 3 and Pillow (`pip install pillow`). The DejaVu fonts
-shipped with the system are used; no fonts are bundled.
+Requires Python 3 and Pillow (`pip install pillow`). The four DejaVu
+fonts are bundled in `fonts/` next to the script, so the entry does not
+depend on system fonts; the loader falls back to the system copies and
+then to Pillow's built-in default if the bundled files are missing.
 
 ## Determinism
 

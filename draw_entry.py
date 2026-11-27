@@ -18,14 +18,28 @@ INK = (17, 17, 17)        # near-black ink
 RED = (178, 34, 34)       # single red accent
 GREY = (90, 86, 76)       # muted grey for rules and captions
 
-SERIF = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
-SERIF_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
-SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-SANS_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+SERIF = "DejaVuSerif.ttf"
+SERIF_BOLD = "DejaVuSerif-Bold.ttf"
+SANS = "DejaVuSans.ttf"
+SANS_BOLD = "DejaVuSans-Bold.ttf"
+
+# Font lookup order: the copies bundled in fonts/ next to this script
+# first, then the system font directory, then Pillow's built-in default.
+# The entry must render even where the system fonts are missing.
+_BUNDLED_FONT_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "fonts")
+_SYSTEM_FONT_DIR = "/usr/share/fonts/truetype/dejavu"
 
 
-def font(path, size):
-    return ImageFont.truetype(path, size)
+def font(filename, size):
+    for directory in (_BUNDLED_FONT_DIR, _SYSTEM_FONT_DIR):
+        path = os.path.join(directory, filename)
+        if os.path.isfile(path):
+            return ImageFont.truetype(path, size)
+    try:
+        return ImageFont.load_default(size)
+    except TypeError:  # older Pillow: load_default() takes no size
+        return ImageFont.load_default()
 
 
 def wrap(draw, text, font_obj, max_width):
