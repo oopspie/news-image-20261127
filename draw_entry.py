@@ -149,25 +149,27 @@ def draw_eu_stars(draw, x, y, w, h):
 
 def draw_missile(draw, x, y, w, h):
     """Small pictogram: a missile in flight, nose up, with motion lines."""
-    # Motion lines trailing down-left.
-    for i, offset in enumerate((0, 14, 28)):
-        draw.line([(x + 8, y + h - 18 - offset),
-                   (x + 34, y + h - 18 - offset)], fill=GREY, width=3)
-    # Body: a long tapered shape pointing up-right.
-    body = [(x + 44, y + h - 26), (x + 62, y + 22), (x + 76, y + 12),
-            (x + 88, y + 44), (x + 70, y + h - 8)]
+    # Motion lines trailing down-left, thicker and closer to the tail so
+    # they read as part of the missile instead of floating on their own.
+    for i, offset in enumerate((0, 16, 32)):
+        draw.line([(x + 6, y + h - 34 - offset),
+                   (x + 32, y + h - 34 - offset)], fill=GREY, width=4)
+    # Body: a thick tapered shape pointing up-right, roughly twice as wide
+    # as before so it reads as a missile body at small size, not a shard.
+    body = [(x + 36, y + h - 28), (x + 54, y + 24), (x + 72, y + 14),
+            (x + 94, y + 44), (x + 66, y + h - 10)]
     draw.polygon(body, fill=INK)
-    # Nose cone.
-    draw.polygon([(x + 62, y + 22), (x + 76, y + 12), (x + 82, y + 30)],
+    # Nose cone: a broad red tip across the top of the body.
+    draw.polygon([(x + 58, y + 30), (x + 72, y + 14), (x + 88, y + 38)],
                  fill=RED)
-    # Fins at the tail.
-    draw.polygon([(x + 44, y + h - 26), (x + 30, y + h - 6),
-                  (x + 52, y + h - 12)], fill=INK)
-    draw.polygon([(x + 70, y + h - 8), (x + 88, y + h - 4),
-                  (x + 76, y + h - 24)], fill=INK)
-    # Exhaust flame.
-    draw.polygon([(x + 46, y + h - 18), (x + 30, y + h - 2),
-                  (x + 56, y + h - 6)], fill=RED)
+    # Fins at the tail, flaring out on both sides.
+    draw.polygon([(x + 36, y + h - 28), (x + 20, y + h - 12),
+                  (x + 48, y + h - 20)], fill=INK)
+    draw.polygon([(x + 66, y + h - 10), (x + 86, y + h - 6),
+                  (x + 56, y + h - 24)], fill=INK)
+    # Exhaust flame below the tail, larger so it is visible at small size.
+    draw.polygon([(x + 46, y + h - 14), (x + 30, y + h - 2),
+                  (x + 62, y + h - 6)], fill=RED)
 
 
 def draw_helmet_letter(draw, x, y, w, h):
